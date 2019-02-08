@@ -61,7 +61,7 @@ namespace CardGame
             //Console.WriteLine(deck);
             //Console.ReadLine();
 
-            deck.DealCards(playerCount,allPlayers);
+            deck.DealCards(playerCount);
 
         }
     }
