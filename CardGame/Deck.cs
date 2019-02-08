@@ -45,12 +45,12 @@ namespace CardGame
             return string.Join(",", Cards.Select(x => x.ToString()));
         }
 
-        public void DealCards(int players)
+        public Card[,] DealCards(int players)
         {
             //determine how many cards each player gets and creates hands
             int maxCards = 0;
             int j = 0;
-            Card[,] hands;
+            Card[,] hands = null;
             switch (players)
             {
                 case 2:
@@ -61,12 +61,12 @@ namespace CardGame
                         hands[0, j] = this.Cards[i];
                         hands[1, j] = this.Cards[i + 1];
                         j++;
-                    }   
+                    }
                     break;
                 case 3:
                     maxCards = 17;
                     hands = new Card[3, 17];
-                    for (int i = 0; i < this.Cards.Length; i += 3)
+                    for (int i = 0; i < (this.Cards.Length-1); i += 3)
                     {
                         hands[0,j] = this.Cards[i];
                         hands[1,j] = this.Cards[i + 1];
@@ -86,9 +86,9 @@ namespace CardGame
                         j++;
                     }
                     break;
-
             }
             Console.WriteLine($"Each player gets {maxCards} cards");
+            return hands;
         }
     }
 }

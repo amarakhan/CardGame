@@ -61,9 +61,15 @@ namespace CardGame
             //Console.WriteLine(deck);
             //Console.ReadLine();
 
-            deck.DealCards(playerCount);
-
-
+            Card[,] allPlayerHands = deck.DealCards(playerCount);
+            for (int i=0; i < allPlayerHands.GetLength(0); i++)
+            {
+                for (int j=0; j<allPlayerHands.GetLength(1);j++)
+                {
+                    //Console.WriteLine(allPlayerHands[i,j].Suit);
+                    //TODO
+                }
+            }
         }
     }
 }
