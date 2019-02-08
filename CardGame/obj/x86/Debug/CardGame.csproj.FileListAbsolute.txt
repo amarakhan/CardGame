@@ -1,0 +1,6 @@
+/Users/amarakhan/Projects/CardGame/CardGame/obj/x86/Debug/CardGame.csprojAssemblyReference.cache
+/Users/amarakhan/Projects/CardGame/CardGame/obj/x86/Debug/CardGame.csproj.CoreCompileInputs.cache
+/Users/amarakhan/Projects/CardGame/CardGame/bin/Debug/CardGame.exe
+/Users/amarakhan/Projects/CardGame/CardGame/bin/Debug/CardGame.pdb
+/Users/amarakhan/Projects/CardGame/CardGame/obj/x86/Debug/CardGame.exe
+/Users/amarakhan/Projects/CardGame/CardGame/obj/x86/Debug/CardGame.pdb

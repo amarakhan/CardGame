@@ -1,0 +1,33 @@
+﻿<Properties StartupConfiguration="{0F48CDCA-CE2D-4E23-AD8A-161F82C0B492}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CardGame/Program.cs">
+    <Files>
+      <File FileName="CardGame/Program.cs" Line="24" Column="47" />
+      <File FileName="CardGame/Card.cs" Line="17" Column="37" />
+      <File FileName="CardGame/Deck.cs" Line="24" Column="14" />
+      <File FileName="CardGame/Players.cs" Line="16" Column="9" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="CardGame" expanded="True">
+            <Node name="CardGame" expanded="True">
+              <Node name="Program.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State name="__root__">
+          <Node name="CardGame" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.CardGame PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
