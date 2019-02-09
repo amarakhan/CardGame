@@ -45,50 +45,40 @@ namespace CardGame
             return string.Join(",", Cards.Select(x => x.ToString()));
         }
 
-        public Card[,] DealCards(int players)
+        public void DealCards(int players, Players[] allplayers)
         {
             //determine how many cards each player gets and creates hands
             int maxCards = 0;
-            int j = 0;
-            Card[,] hands = null;
             switch (players)
             {
                 case 2:
                     maxCards = 26;
-                    hands = new Card[2, 26];
                     for (int i = 0; i < this.Cards.Length; i+=2)
                     {
-                        hands[0, j] = this.Cards[i];
-                        hands[1, j] = this.Cards[i + 1];
-                        j++;
+                        allplayers[0].Hand.Add(this.Cards[i]);
+                        allplayers[1].Hand.Add(this.Cards[i+1]);    
                     }
                     break;
                 case 3:
                     maxCards = 17;
-                    hands = new Card[3, 17];
                     for (int i = 0; i < (this.Cards.Length-1); i += 3)
                     {
-                        hands[0,j] = this.Cards[i];
-                        hands[1,j] = this.Cards[i + 1];
-                        hands[2,j] = this.Cards[i + 2];
-                        j++;
+                        allplayers[0].Hand.Add(this.Cards[i]);
+                        allplayers[1].Hand.Add(this.Cards[i + 1]);
+                        allplayers[1].Hand.Add(this.Cards[i + 2]);
                     }
                     break;
                 case 4:
                     maxCards = 13;
-                    hands = new Card[4, 13];
                     for (int i = 0; i < this.Cards.Length; i += 4)
                     {
-                        hands[0,j] = this.Cards[i];
-                        hands[1,j] = this.Cards[i + 1];
-                        hands[2,j] = this.Cards[i + 2];
-                        hands[3,j] = this.Cards[i + 3];
-                        j++;
+                        allplayers[0].Hand.Add(this.Cards[i]);
+                        allplayers[1].Hand.Add(this.Cards[i + 1]);
+                        allplayers[1].Hand.Add(this.Cards[i + 2]);
                     }
                     break;
             }
-            Console.WriteLine($"Each player gets {maxCards} cards");
-            return hands;
+            Console.WriteLine($"Each player gets {maxCards} cards"); 
         }
     }
 }

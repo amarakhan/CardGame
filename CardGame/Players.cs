@@ -9,8 +9,8 @@ namespace CardGame
     {
         public string FirstName { get; set; }
         public string LastName { get; set;  }
-        public int Score { get; set; }
-        public Card[] Hand { get; set; }
+        public bool Winner { get; set; }
+        public List<Card> Hand { get; set; }
         public int PlayerNumber { get; set; }
 
 
@@ -22,7 +22,9 @@ namespace CardGame
             string lastName = Console.ReadLine();
             FirstName = firstName;
             LastName = lastName;
-            Score = 0;
+            Winner = false;
+            Hand = new List<Card>();
+
         }
     }
 }

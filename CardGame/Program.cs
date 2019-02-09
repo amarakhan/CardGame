@@ -21,9 +21,13 @@ namespace CardGame
                 if (regex.IsMatch(check)== true) {
                     isNumber = true;
                     playerCount = int.Parse(check);
-                    if (playerCount > 4 || playerCount < 2)
+                    if (playerCount > 4)
                     {
-                        Console.WriteLine("That player number is not in bounds!!");
+                        Console.WriteLine("Too many players!");
+                    }
+                    else if (playerCount < 2)
+                    {
+                        Console.WriteLine("Too few players!");
                     }
                 }
                 else 
@@ -56,20 +60,22 @@ namespace CardGame
             }
 
             Deck deck = new Deck();
-
             deck.Shuffle();
+            deck.DealCards(playerCount, allPlayers); //Deal cards to players
             //Console.WriteLine(deck);
             //Console.ReadLine();
 
-            Card[,] allPlayerHands = deck.DealCards(playerCount);
-            for (int i=0; i < allPlayerHands.GetLength(0); i++)
+            //Checking that players were dealt cards
+            foreach(var elem in allPlayers[0].Hand)
             {
-                for (int j=0; j<allPlayerHands.GetLength(1);j++)
-                {
-                    //Console.WriteLine(allPlayerHands[i,j].Suit);
-                    //TODO
-                }
+                Console.WriteLine(elem.Suit);
+
             }
+
+
+
         }
+
+
     }
 }
