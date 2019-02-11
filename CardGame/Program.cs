@@ -64,15 +64,88 @@ namespace CardGame
             deck.DealCards(playerCount, allPlayers); //Deal cards to players
             //Console.WriteLine(deck);
             //Console.ReadLine();
+            bool gameOver = false;
+            int rounds = 0;
+            switch (playerCount) {
+                case 2:
+                    while (gameOver == false && rounds < 2000 && (allPlayers[0].Winner == false && allPlayers[1].Winner == false))
+                    {
+                        deck.Round(playerCount, allPlayers, gameOver);
+                        //Console.WriteLine("_________________________________________________");
+                        //foreach(var elem in allPlayers[0].Hand)
+                        //{
+                        //    Console.Write($"{elem.Value} of {elem.Suit} |");
+                        //}
+                        //Console.WriteLine("");
+                        //Console.WriteLine("_________________________________________________");
+                        //foreach (var elem in allPlayers[1].Hand)
+                        //{
+                        //    Console.Write($"{elem.Value} of {elem.Suit} |");
+                        //}
+                        //Console.WriteLine("");
+                        //Console.WriteLine("_________________________________________________");
+                        rounds +=1;
+                        if (allPlayers[0].Hand.Count == 0 || allPlayers[1].Hand.Count == 0)
+                        {
+                            if (allPlayers[1].Hand.Count == 52)
+                            {
+                                allPlayers[1].Winner = true;
+                                Console.WriteLine("Player 2 has all the cards");
+                                gameOver = true;
+                            }
+                            else if (allPlayers[0].Hand.Count == 52)
+                            {
+                                allPlayers[0].Winner = true;
+                                Console.WriteLine("Player 1 has all the cards");
+                                gameOver = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("A player ran out of cards.. ");
+                                gameOver = true;
+                            }
+                        }
+                    }
+                    if (rounds== 2000)
+                    {
+                        allPlayers[0].Winner = false;
+                        allPlayers[1].Winner = false;
+                    }
 
-            //Checking that players were dealt cards
-            foreach(var elem in allPlayers[0].Hand)
-            {
-                Console.WriteLine(elem.Suit);
+                    if (allPlayers[0].Hand.Count > 0 && allPlayers[1].Hand.Count == 0)
+                    {
+                        allPlayers[0].Winner = true;
+                        allPlayers[1].Winner = false;
+                    }
+                    else if (allPlayers[1].Hand.Count > 0 && allPlayers[0].Hand.Count == 0)
+                    {
+                        allPlayers[1].Winner = true;
+                        allPlayers[0].Winner = false;
+                    }
+                    Console.WriteLine("_____ Game Summary _____");
+                    Console.WriteLine($"Did player 1 win the game? {allPlayers[0].Winner}. Player 1 has {allPlayers[0].Hand.Count} cards left");
+                    Console.WriteLine($"Did player 2 win the game? {allPlayers[1].Winner}. Player 2 has {allPlayers[1].Hand.Count} cards left");
+                    break;
+                case 3:
+                    //TODO
+                    Console.WriteLine($"Functionality has not yet been added for {playerCount} players");
+                    break;
+                case 4:
+                    //TODO
+                    Console.WriteLine($"Functionality has not yet been added for {playerCount} players");
+                    break;
 
             }
+            Console.WriteLine($"There were {rounds} rounds");
+            if (allPlayers[0].Winner == false && allPlayers[1].Winner == false)
+            {
+                Console.WriteLine("No one won this game");
+            }
 
-
+            if (rounds == 2000)
+            {
+                Console.WriteLine("Your game ended because it was taking too long..");
+            }
 
         }
 

@@ -1,10 +1,10 @@
 ﻿<Properties StartupConfiguration="{0F48CDCA-CE2D-4E23-AD8A-161F82C0B492}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="CardGame/Program.cs">
     <Files>
-      <File FileName="CardGame/Program.cs" Line="27" Column="20" />
-      <File FileName="CardGame/Card.cs" Line="14" Column="10" />
-      <File FileName="CardGame/Deck.cs" Line="61" Column="22" />
-      <File FileName="CardGame/Players.cs" Line="21" Column="56" />
+      <File FileName="CardGame/Card.cs" Line="18" Column="29" />
+      <File FileName="CardGame/Deck.cs" Line="139" Column="45" />
+      <File FileName="CardGame/Players.cs" Line="10" Column="46" />
+      <File FileName="CardGame/Program.cs" Line="71" Column="63" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

@@ -10,7 +10,7 @@ namespace CardGame
         public string FirstName { get; set; }
         public string LastName { get; set;  }
         public bool Winner { get; set; }
-        public List<Card> Hand { get; set; }
+        public Queue<Card> Hand { get; set; }
         public int PlayerNumber { get; set; }
 
 
@@ -23,7 +23,7 @@ namespace CardGame
             FirstName = firstName;
             LastName = lastName;
             Winner = false;
-            Hand = new List<Card>();
+            Hand = new Queue<Card>();
 
         }
     }
