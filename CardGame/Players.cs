@@ -16,9 +16,9 @@ namespace CardGame
 
         public Players()
         {
-            Console.WriteLine("Please enter your first name");
+            Console.WriteLine("Enter first name");
             string firstName = Console.ReadLine();
-            Console.WriteLine("Please enter your last name");
+            Console.WriteLine("Enter last name");
             string lastName = Console.ReadLine();
             FirstName = firstName;
             LastName = lastName;

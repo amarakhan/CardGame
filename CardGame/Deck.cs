@@ -20,19 +20,17 @@ namespace CardGame
                 for (int j = 0; j < values.Length; j++)
                 {
                     Cards[(i * values.Length) + j] = new Card(suits[i], values[j], rank[i]);
-
                 }
             }
         }
 
         public Card[] Cards { get; private set; }
 
-        public void Shuffle()
+        public void Shuffle() //this method shuffles the deck of cards
         {
             Random rng = new Random();
             for (int i = 0; i < this.Cards.Length * 100; i++)
             {
-
                 int position1 = rng.Next(0, this.Cards.Length);
                 int position2 = rng.Next(0, this.Cards.Length);
                 Card temp = this.Cards[position1];
@@ -46,216 +44,160 @@ namespace CardGame
             return string.Join(",", Cards.Select(x => x.ToString()));
         }
 
+        //This method deals cards to the hand property for each player stored in the array allplayers
         public void DealCards(int players, Players[] allplayers)
         {
-            //determine how many cards each player gets and creates hands
             int maxCards = 0;
             switch (players)
             {
                 case 2:
                     maxCards = 26;
-                    for (int i = 0; i < this.Cards.Length; i+=2)
+                    for (int i=0; i<this.Cards.Length; i+=2)
                     {
                         allplayers[0].Hand.Enqueue(this.Cards[i]);
-                        allplayers[1].Hand.Enqueue(this.Cards[i+1]);    
+                        allplayers[1].Hand.Enqueue(this.Cards[i+1]);
                     }
                     break;
                 case 3:
                     maxCards = 17;
-                    for (int i = 0; i < (this.Cards.Length-1); i += 3)
+                    for (int i = 0; i < this.Cards.Length; i += 3)
                     {
                         allplayers[0].Hand.Enqueue(this.Cards[i]);
                         allplayers[1].Hand.Enqueue(this.Cards[i + 1]);
-                        allplayers[1].Hand.Enqueue(this.Cards[i + 2]);
+                        allplayers[2].Hand.Enqueue(this.Cards[i + 2]);
                     }
                     break;
                 case 4:
                     maxCards = 13;
-                    for (int i = 0; i < this.Cards.Length; i += 4)
+                    for (int i = 0; i < this.Cards.Length; i += 3)
                     {
                         allplayers[0].Hand.Enqueue(this.Cards[i]);
                         allplayers[1].Hand.Enqueue(this.Cards[i + 1]);
-                        allplayers[1].Hand.Enqueue(this.Cards[i + 2]);
+                        allplayers[2].Hand.Enqueue(this.Cards[i + 2]);
+                        allplayers[3].Hand.Enqueue(this.Cards[i + 3]);
                     }
                     break;
-            }
-            Console.WriteLine($"Each player gets {maxCards} cards"); 
-        }
+            } //end of switch statement for dealing cards based on player count
+            Console.WriteLine($"Each player gets {maxCards} cards");
+        }//end of DealCards method
 
         public void Round(int players, Players[] allplayers, bool gameover)
         {
             List<Card> tempHand = new List<Card>();
-
+            Card[] p1tempHand = new Card[4];
+            Card[] p2tempHand = new Card[4];
             switch (players)
             {
-                case 2:
+                case 2: //the round that's played when there are only 2 players
                     var p1Card = allplayers[0].Hand.Dequeue();
                     var p2Card = allplayers[1].Hand.Dequeue();
-
                     tempHand.Add(p1Card);
                     tempHand.Add(p2Card);
                     Console.WriteLine($"Player 1 is playing {p1Card.Value} of {p1Card.Suit}, and Player 2 is playing {p2Card.Value} of {p2Card.Suit}");
 
-
-                    if (p1Card.Rank >p2Card.Rank)
+                    if (p1Card.Rank > p2Card.Rank) //If p1 plays the higher card
                     {
-                        foreach(var elem in tempHand)
+                        foreach (var elem in tempHand)
                         {
                             allplayers[0].Hand.Enqueue(elem);
                         }
-                        Console.WriteLine("Player 1 won this round");
                     }
-                    else if (p2Card.Rank>p1Card.Rank)
-                    {
+                    else if (p1Card.Rank < p2Card.Rank){ //If p2 plays the higher card
                         foreach (var elem in tempHand)
                         {
                             allplayers[1].Hand.Enqueue(elem);
                         }
-                        Console.WriteLine("Player 2 won this round");
                     }
-                    //WAR
-                    else //(p1Card.Rank == p2Card.Rank)
+                    else //WAR (p1 card same value as p2 card)
                     {
                         if (allplayers[0].Hand.Count < 3 && allplayers[1].Hand.Count < 3)
                         {
+                            Console.WriteLine("P1 and P2 do not have enough cards for war, both lose");
                             allplayers[0].Winner = false;
                             allplayers[1].Winner = false;
-                            Console.WriteLine("THIS IS WAR BUT.. The game is over, player 1 and 2 do not have enough cards for war");
                             gameover = true;
                         }
                         else if (allplayers[0].Hand.Count < 3)
                         {
                             allplayers[0].Winner = false;
                             allplayers[1].Winner = true;
-                            Console.WriteLine("THIS IS WAR BUT.. The game is over, player 1 does not have enough cards for war");
+                            Console.WriteLine("P1 does not have enough cards for war, P2 wins");
                             gameover = true;
                         }
                         else if (allplayers[1].Hand.Count < 3)
                         {
-                            allplayers[1].Winner = false;
+                            Console.WriteLine("P2 does not have enough cards for war, P1 wins");
                             allplayers[0].Winner = true;
-                            Console.WriteLine("THIS IS WAR BUT.. The game is over, player 2 does not have enough cards for war");
+                            allplayers[1].Winner = false;
                             gameover = true;
                         }
                         else
                         {
-                            Console.WriteLine("THIS IS WAR");
-                            var card1P1 = allplayers[0].Hand.Dequeue();
-                            var card2P1 = allplayers[0].Hand.Dequeue();
-                            var card3P1 = allplayers[0].Hand.Dequeue();
+                            bool greatestP1 = false;
+                            bool greatestP2 = false;
+                            //TODO both players qualify for WAR this round
+                            p1tempHand[0] = p1Card;
+                            p1tempHand[1] = allplayers[0].Hand.Dequeue();
+                            p1tempHand[2] = allplayers[0].Hand.Dequeue();
+                            p1tempHand[3] = allplayers[0].Hand.Dequeue();
+                            p2tempHand[0] = p2Card;
+                            p2tempHand[1] = allplayers[1].Hand.Dequeue();
+                            p2tempHand[2] = allplayers[1].Hand.Dequeue();
+                            p2tempHand[3] = allplayers[1].Hand.Dequeue();
 
-
-                            var card1P2 = allplayers[1].Hand.Dequeue();
-                            var card2P2 = allplayers[1].Hand.Dequeue();
-                            var card3P2 = allplayers[1].Hand.Dequeue();
-
-
-                            Card[] p1Hand = { p1Card, card1P1, card2P1, card3P1 };
-                            Card[] p2Hand = { p2Card, card1P2, card2P2, card3P2 };
-                            if (p1Hand[0]==p2Hand[0] && p1Hand[1] == p2Hand[1] && p1Hand[2] == p2Hand[2] && p1Hand[3] == p2Hand[3])
+                            while (greatestP1 == false && greatestP2 == false)
                             {
-                                Console.WriteLine("No one has won war... cards will be discarded");
-                            }
-                            else
+                                for (int i=0; i<p1tempHand.Length;i++)
+                                {
+                                    for (int j=0; j<p2tempHand.Length;j++)
+                                    {
+                                        if (p1tempHand[i].Rank > p2tempHand[j].Rank)
+                                        {
+                                            greatestP1 = true;
+                                        }
+                                        else if(p1tempHand[i].Rank < p2tempHand[j].Rank)
+                                        {
+                                            greatestP2 = true;
+                                        }
+                                        else{
+                                            greatestP1 = false;
+                                            greatestP2 = false;
+                                        }
+
+                                    }
+                                }
+                            } //end of while loop for finding out if p1 or p2 has a higher card first
+                            if (greatestP1 == true)
                             {
-                                if (p1Hand[0].Rank > p2Hand[0].Rank)
+                                foreach(var elem in p1tempHand)
                                 {
-                                    foreach (var elem in p1Hand)
-                                    {
-                                        allplayers[0].Hand.Enqueue(elem);
-                                    }
-                                    Console.WriteLine("Player 1 won this round");
+                                    allplayers[0].Hand.Enqueue(elem);
                                 }
-                                else if (p2Hand[0].Rank > p1Hand[0].Rank)
+                                foreach (var elem in p2tempHand)
                                 {
-                                    foreach (var elem in p1Hand)
-                                    {
-                                        allplayers[1].Hand.Enqueue(elem);
-                                    }
-                                    Console.WriteLine("Player 2 won this round");
+                                    allplayers[0].Hand.Enqueue(elem);
                                 }
-                                else //both cards at index 0 are equal
-                                {
-                                    if (p1Hand[1].Rank > p2Hand[1].Rank)
-                                    {
-                                        foreach (var elem in p1Hand)
-                                        {
-                                            allplayers[0].Hand.Enqueue(elem);
-                                        }
-                                        Console.WriteLine("Player 1 won this round");
-                                    }
-                                    else if (p2Hand[1].Rank > p1Hand[1].Rank)
-                                    {
-                                        foreach (var elem in p1Hand)
-                                        {
-                                            allplayers[1].Hand.Enqueue(elem);
-                                        }
-                                        Console.WriteLine("Player 2 won this round");
-                                    }
-                                    else //both cards at index 1 are equal
-                                    {
-                                        if (p1Hand[2].Rank > p2Hand[2].Rank)
-                                        {
-                                            foreach (var elem in p1Hand)
-                                            {
-                                                allplayers[0].Hand.Enqueue(elem);
-                                            }
-                                            Console.WriteLine("Player 1 won this round");
-                                        }
-                                        else if (p2Hand[2].Rank > p1Hand[2].Rank)
-                                        {
-                                            foreach (var elem in p1Hand)
-                                            {
-                                                allplayers[1].Hand.Enqueue(elem);
-                                            }
-                                            Console.WriteLine("Player 2 won this round");
-                                        }
-                                        else
-                                        {
-                                            if (p1Hand[3].Rank > p2Hand[3].Rank)
-                                            {
-                                                foreach (var elem in p1Hand)
-                                                {
-                                                    allplayers[0].Hand.Enqueue(elem);
-                                                }
-                                                Console.WriteLine("Player 1 won this round");
-                                            }
-                                            else if (p2Hand[3].Rank > p1Hand[3].Rank)
-                                            {
-                                                foreach (var elem in p1Hand)
-                                                {
-                                                    allplayers[1].Hand.Enqueue(elem);
-                                                }
-                                                Console.WriteLine("Player 2 won this round");
-                                            }
-                                        }
-
-                                    }
-                                }
-                                //TODO
-                                //if (allplayers[1].Hand.Count == 52)
-                                //{
-                                //    allplayers[1].Winner = true;
-                                //    Console.WriteLine("Player 2 has all the cards");
-                                //}
-                                //else if (allplayers[0].Hand.Count == 52)
-                                //{
-                                //    allplayers[0].Winner = true;
-                                //    Console.WriteLine("Player 1 has all the cards");
-                                //}
                             }
+                            else if (greatestP2 == true)
+                            {
+                                foreach (var elem in p1tempHand)
+                                {
+                                    allplayers[0].Hand.Enqueue(elem);
+                                }
+                                foreach (var elem in p2tempHand)
+                                {
+                                    allplayers[0].Hand.Enqueue(elem);
+                                }
+                            }
+                        }//end of WAR if both players have enough cards
+                    }//end of WAR COMPLETELY for this round
 
-                        }
-                    }
-
                     break;
-                case 3:
-                    //TODO
+                case 3: //the round that's played when there are 3 players
                     break;
-                case 4:
-                    //TODO
+                case 4: //the round that's played when there are 4 players
                     break;
-            }
-        }
-    }
-}
+            } //end of switch statement
+        } //end of Round method
+    }//end of Deck class
+} //end of CardGame namespace

@@ -7,7 +7,6 @@ namespace CardGame
     {
         public static void Main(string[] args)
         {
-                
             //Getting player count
             bool isNumber = false;
             string check;
@@ -18,7 +17,8 @@ namespace CardGame
             {
                 Console.WriteLine("Please enter number of players (between 2 and 4 inclusively): ");
                 check = Console.ReadLine();
-                if (regex.IsMatch(check)== true) {
+                if (regex.IsMatch(check) == true)
+                {
                     isNumber = true;
                     playerCount = int.Parse(check);
                     if (playerCount > 4)
@@ -30,23 +30,23 @@ namespace CardGame
                         Console.WriteLine("Too few players!");
                     }
                 }
-                else 
+                else
                 {
                     Console.WriteLine("That's not a number!");
                 }
             }
-    
+
 
             //Creating an array to store all the players
             Players[] allPlayers = new Players[playerCount];
-            for (int i=0; i<playerCount; i++)
+            for (int i = 0; i < playerCount; i++)
             {
-                Console.WriteLine($"Hello Player {i+1},"); //Players are named in the console initially as index + 1
+                Console.WriteLine($"Hi Player {i + 1},"); //Players are named in the console initially as index + 1
                 allPlayers[i] = new Players();
             }
 
             //Setting player number for each player
-            for (int i=0; i<allPlayers.Length; i++) 
+            for (int i = 0; i < allPlayers.Length; i++)
             {
                 allPlayers[i].PlayerNumber = i + 1;
             }
@@ -56,7 +56,7 @@ namespace CardGame
             ("Current Players: ");
             foreach (var elem in allPlayers)
             {
-                Console.WriteLine("Player"+ elem.PlayerNumber+": " +elem.FirstName + " " + elem.LastName + " ");
+                Console.WriteLine("P" + elem.PlayerNumber + ": " + elem.FirstName + " " + elem.LastName + " ");
             }
 
             Deck deck = new Deck();
@@ -64,91 +64,53 @@ namespace CardGame
             deck.DealCards(playerCount, allPlayers); //Deal cards to players
             //Console.WriteLine(deck);
             //Console.ReadLine();
+
+            //Checking that players were dealt cards
+            //foreach (var elem in allPlayers[0].Hand)
+            //{
+            //    Console.WriteLine(elem.Suit);
+            //}
+
+
+            //Start the game
             bool gameOver = false;
             int rounds = 0;
-            switch (playerCount) {
-                case 2:
-                    while (gameOver == false && rounds < 2000 && (allPlayers[0].Winner == false && allPlayers[1].Winner == false))
-                    {
-                        deck.Round(playerCount, allPlayers, gameOver);
-                        //Console.WriteLine("_________________________________________________");
-                        //foreach(var elem in allPlayers[0].Hand)
-                        //{
-                        //    Console.Write($"{elem.Value} of {elem.Suit} |");
-                        //}
-                        //Console.WriteLine("");
-                        //Console.WriteLine("_________________________________________________");
-                        //foreach (var elem in allPlayers[1].Hand)
-                        //{
-                        //    Console.Write($"{elem.Value} of {elem.Suit} |");
-                        //}
-                        //Console.WriteLine("");
-                        //Console.WriteLine("_________________________________________________");
-                        rounds +=1;
-                        if (allPlayers[0].Hand.Count == 0 || allPlayers[1].Hand.Count == 0)
-                        {
-                            if (allPlayers[1].Hand.Count == 52)
-                            {
-                                allPlayers[1].Winner = true;
-                                Console.WriteLine("Player 2 has all the cards");
-                                gameOver = true;
-                            }
-                            else if (allPlayers[0].Hand.Count == 52)
-                            {
-                                allPlayers[0].Winner = true;
-                                Console.WriteLine("Player 1 has all the cards");
-                                gameOver = true;
-                            }
-                            else
-                            {
-                                Console.WriteLine("A player ran out of cards.. ");
-                                gameOver = true;
-                            }
-                        }
-                    }
-                    if (rounds== 2000)
-                    {
-                        allPlayers[0].Winner = false;
-                        allPlayers[1].Winner = false;
-                    }
+            while (rounds < 2000 && gameOver == false)
+            {
+                Console.WriteLine($"Round {rounds}");
 
-                    if (allPlayers[0].Hand.Count > 0 && allPlayers[1].Hand.Count == 0)
-                    {
-                        allPlayers[0].Winner = true;
-                        allPlayers[1].Winner = false;
-                    }
-                    else if (allPlayers[1].Hand.Count > 0 && allPlayers[0].Hand.Count == 0)
-                    {
-                        allPlayers[1].Winner = true;
-                        allPlayers[0].Winner = false;
-                    }
-                    Console.WriteLine("_____ Game Summary _____");
-                    Console.WriteLine($"Did player 1 win the game? {allPlayers[0].Winner}. Player 1 has {allPlayers[0].Hand.Count} cards left");
-                    Console.WriteLine($"Did player 2 win the game? {allPlayers[1].Winner}. Player 2 has {allPlayers[1].Hand.Count} cards left");
-                    break;
-                case 3:
-                    //TODO
-                    Console.WriteLine($"Functionality has not yet been added for {playerCount} players");
-                    break;
-                case 4:
-                    //TODO
-                    Console.WriteLine($"Functionality has not yet been added for {playerCount} players");
-                    break;
-
+                if (allPlayers[0].Hand.Count == 0 && allPlayers[1].Hand.Count == 0)
+                {
+                    allPlayers[0].Winner = false;
+                    allPlayers[1].Winner = false;
+                    gameOver = true;
+                    Console.WriteLine("The game is over, both players ran out of cards, no winners");
+                }
+                else if (allPlayers[0].Hand.Count == 0)
+                {
+                    allPlayers[0].Winner = false;
+                    allPlayers[1].Winner = true;
+                    gameOver = true;
+                    Console.WriteLine("The game is over, P1 ran out of cards");
+                }
+                else if (allPlayers[1].Hand.Count == 0)
+                {
+                    allPlayers[0].Winner = true;
+                    allPlayers[1].Winner = false;
+                    gameOver = true;
+                    Console.WriteLine("The game is over, P2 ran out of cards");
+                }
+                else
+                {
+                    deck.Round(playerCount, allPlayers, gameOver);
+                }
+                rounds++;
+                Console.WriteLine($"End of round {rounds}");
             }
+
             Console.WriteLine($"There were {rounds} rounds");
-            if (allPlayers[0].Winner == false && allPlayers[1].Winner == false)
-            {
-                Console.WriteLine("No one won this game");
-            }
-
-            if (rounds == 2000)
-            {
-                Console.WriteLine("Your game ended because it was taking too long..");
-            }
-
-        }
-
-
-    }
+            Console.WriteLine("P1 is winner? "+allPlayers[0].Winner);
+            Console.WriteLine("P2 is winner? " + allPlayers[1].Winner);
+        }//end of main method
+    }//end of program class
 }
