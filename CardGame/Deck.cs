@@ -19,9 +19,10 @@ namespace CardGame
             {
                 for (int j = 0; j < values.Length; j++)
                 {
-                    Cards[(i * values.Length) + j] = new Card(suits[i], values[j], rank[i]);
+                        Cards[(i * values.Length) + j] = new Card(suits[i], values[j], rank[j]);
                 }
             }
+
         }
 
         public Card[] Cards { get; private set; }
@@ -48,24 +49,26 @@ namespace CardGame
         public void DealCards(int players, Players[] allplayers)
         {
             int maxCards = 0;
+            int counterForCards = 0;
             switch (players)
             {
                 case 2:
                     maxCards = 26;
-                    for (int i=0; i<this.Cards.Length; i+=2)
-                    {
-                        allplayers[0].Hand.Enqueue(this.Cards[i]);
-                        allplayers[1].Hand.Enqueue(this.Cards[i+1]);
-                    }
+                        for (int i = 0; i < this.Cards.Length; i += 2)
+                        {
+                            allplayers[0].Hand.Enqueue(this.Cards[i]);
+                            allplayers[1].Hand.Enqueue(this.Cards[i + 1]);
+                        }
                     break;
                 case 3:
                     maxCards = 17;
-                    for (int i = 0; i < this.Cards.Length; i += 3)
-                    {
-                        allplayers[0].Hand.Enqueue(this.Cards[i]);
-                        allplayers[1].Hand.Enqueue(this.Cards[i + 1]);
-                        allplayers[2].Hand.Enqueue(this.Cards[i + 2]);
-                    }
+                        for (int i = 0; i <17; i += 3)
+                        {
+                            allplayers[0].Hand.Enqueue(this.Cards[i]);
+                            allplayers[1].Hand.Enqueue(this.Cards[i + 1]);
+                            allplayers[2].Hand.Enqueue(this.Cards[i + 2]);
+                            counterForCards++;
+                        }
                     break;
                 case 4:
                     maxCards = 13;
@@ -133,8 +136,11 @@ namespace CardGame
                         }
                         else
                         {
+                            Console.WriteLine("THIS IS WAR");
+                            Console.WriteLine($"P1 had {p1Card.Value} of {p1Card.Suit}, while P2 had {p2Card.Value} of {p2Card.Suit}");
                             bool greatestP1 = false;
                             bool greatestP2 = false;
+                            int warRound = 0;
                             //TODO both players qualify for WAR this round
                             p1tempHand[0] = p1Card;
                             p1tempHand[1] = allplayers[0].Hand.Dequeue();
@@ -145,7 +151,18 @@ namespace CardGame
                             p2tempHand[2] = allplayers[1].Hand.Dequeue();
                             p2tempHand[3] = allplayers[1].Hand.Dequeue();
 
-                            while (greatestP1 == false && greatestP2 == false)
+                            Console.WriteLine("Player 1 is playing.. ");
+                            foreach(var elem in p1tempHand)
+                            {
+                                Console.WriteLine(elem.Value+" of "+elem.Suit);
+                            }
+                            Console.WriteLine("Player 2 is playing.. ");
+                            foreach (var elem in p2tempHand)
+                            {
+                                Console.WriteLine(elem.Value + " of " + elem.Suit);
+                            }
+
+                            while (warRound < 4)
                             {
                                 for (int i=0; i<p1tempHand.Length;i++)
                                 {
@@ -159,12 +176,8 @@ namespace CardGame
                                         {
                                             greatestP2 = true;
                                         }
-                                        else{
-                                            greatestP1 = false;
-                                            greatestP2 = false;
-                                        }
-
                                     }
+                                    warRound++;
                                 }
                             } //end of while loop for finding out if p1 or p2 has a higher card first
                             if (greatestP1 == true)
@@ -188,6 +201,11 @@ namespace CardGame
                                 {
                                     allplayers[0].Hand.Enqueue(elem);
                                 }
+                            }
+                            else
+                            {
+                                Console.WriteLine("no one wins");
+                                gameover = true;
                             }
                         }//end of WAR if both players have enough cards
                     }//end of WAR COMPLETELY for this round

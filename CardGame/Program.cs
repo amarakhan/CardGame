@@ -75,42 +75,64 @@ namespace CardGame
             //Start the game
             bool gameOver = false;
             int rounds = 0;
-            while (rounds < 2000 && gameOver == false)
+
+            switch (playerCount)
             {
-                Console.WriteLine($"Round {rounds}");
+                case 2:
+                    while (rounds < 2000 && gameOver == false)
+                    {
+                        Console.WriteLine($"_____ Round {rounds}_____");
 
-                if (allPlayers[0].Hand.Count == 0 && allPlayers[1].Hand.Count == 0)
-                {
-                    allPlayers[0].Winner = false;
-                    allPlayers[1].Winner = false;
+                        if (allPlayers[0].Hand.Count == 0 && allPlayers[1].Hand.Count == 0)
+                        {
+                            allPlayers[0].Winner = false;
+                            allPlayers[1].Winner = false;
+                            gameOver = true;
+                            Console.WriteLine("The game is over, both players ran out of cards, no winners");
+                        }
+                        else if (allPlayers[0].Hand.Count == 0)
+                        {
+                            allPlayers[0].Winner = false;
+                            allPlayers[1].Winner = true;
+                            gameOver = true;
+                            Console.WriteLine("The game is over, P1 ran out of cards");
+                        }
+                        else if (allPlayers[1].Hand.Count == 0)
+                        {
+                            allPlayers[0].Winner = true;
+                            allPlayers[1].Winner = false;
+                            gameOver = true;
+                            Console.WriteLine("The game is over, P2 ran out of cards");
+                        }
+                        else
+                        {
+                            deck.Round(playerCount, allPlayers, gameOver);
+                        }
+                        rounds++;
+                        //Console.WriteLine($"End of round {rounds}");
+                    }
+
+                    Console.WriteLine($"There were {rounds} rounds");
+                    if (allPlayers[0].Winner == true)
+                    {
+                        Console.WriteLine("Player 1 won! Player 2 lost!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Player 2 won! Player 1 lost!");
+                    }
+                    break;
+                case 3:
+                    Console.WriteLine("Game is not available for 3 players yet");
                     gameOver = true;
-                    Console.WriteLine("The game is over, both players ran out of cards, no winners");
-                }
-                else if (allPlayers[0].Hand.Count == 0)
-                {
-                    allPlayers[0].Winner = false;
-                    allPlayers[1].Winner = true;
+                    break;
+                case 4:
+                    Console.WriteLine("Game is not available for 4 players yet");
                     gameOver = true;
-                    Console.WriteLine("The game is over, P1 ran out of cards");
-                }
-                else if (allPlayers[1].Hand.Count == 0)
-                {
-                    allPlayers[0].Winner = true;
-                    allPlayers[1].Winner = false;
-                    gameOver = true;
-                    Console.WriteLine("The game is over, P2 ran out of cards");
-                }
-                else
-                {
-                    deck.Round(playerCount, allPlayers, gameOver);
-                }
-                rounds++;
-                Console.WriteLine($"End of round {rounds}");
+                    break;
             }
-
-            Console.WriteLine($"There were {rounds} rounds");
-            Console.WriteLine("P1 is winner? "+allPlayers[0].Winner);
-            Console.WriteLine("P2 is winner? " + allPlayers[1].Winner);
+            //Console.WriteLine("P1 is winner? "+allPlayers[0].Winner);
+            //Console.WriteLine("P2 is winner? " + allPlayers[1].Winner);
         }//end of main method
     }//end of program class
 }

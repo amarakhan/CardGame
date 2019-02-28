@@ -1,9 +1,9 @@
 ﻿<Properties StartupConfiguration="{0F48CDCA-CE2D-4E23-AD8A-161F82C0B492}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="CardGame/Deck.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CardGame/Program.cs">
     <Files>
-      <File FileName="CardGame/Program.cs" Line="28" Column="31" />
-      <File FileName="CardGame/Card.cs" Line="10" Column="39" />
-      <File FileName="CardGame/Deck.cs" Line="146" Column="26" />
+      <File FileName="CardGame/Program.cs" Line="99" Column="17" />
+      <File FileName="CardGame/Card.cs" Line="26" Column="6" />
+      <File FileName="CardGame/Deck.cs" Line="200" Column="40" />
       <File FileName="CardGame/Players.cs" Line="12" Column="41" />
     </Files>
   </MonoDevelop.Ide.Workbench>
